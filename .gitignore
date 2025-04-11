@@ -1,0 +1,24 @@
+# Windows System Files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# PowerShell execution artifacts
+*.ps1xml
+*.psm1
+*.psd1
+
+# VS Code or editor folders
+.vscode/
+.idea/
+
+# Logs or temp files
+*.log
+*.tmp
+*.bak
+*.swp
+*~
+
+# Test folders or local restore data
+/test_data/
+/restore_logs/
