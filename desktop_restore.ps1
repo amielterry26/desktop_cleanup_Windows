@@ -29,6 +29,10 @@ function Restore-Files {
         [ref]$countVar
     )
 
+    if (-not (Test-Path $sourcePath)) {
+        return
+    }
+
     Get-ChildItem -Path $sourcePath -File | ForEach-Object {
         $file = $_
         $filename = $file.Name
