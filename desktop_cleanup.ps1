@@ -1,5 +1,5 @@
 # desktop_cleanup.ps1
-# PowerShell version of the Mac desktop cleanup script
+# PowerShell version (fixed syntax)
 
 # Set paths
 $desktop = [Environment]::GetFolderPath("Desktop")
@@ -39,32 +39,28 @@ Get-ChildItem -Path $desktop -File | ForEach-Object {
     $filename = $file.Name
     $extension = $file.Extension.ToLower().TrimStart('.')
 
-    # Skip the cleanup folder and cleanup/restore scripts
+    # Skip the cleanup folder and scripts
     if ($file.FullName -like "$cleanupDir*" -or $filename -eq "desktop_cleanup.ps1" -or $filename -eq "desktop_restore.ps1") {
         return
     }
 
     $sizeMB = [Math]::Round($file.Length / 1MB, 2)
 
-    switch ($extension) {
-        'pdf' | 'doc' | 'docx' | 'txt' | 'xlsx' | 'xls' | 'ppt' | 'pptx' {
+    if ($extension -in @('pdf','doc','docx','txt','xlsx','xls','ppt','pptx')) {
         Move-Item $file.FullName -Destination (Join-Path $docsDir $filename)
         $docsLog += " - $filename ($sizeMB MB) moved to Documents"
         $docsCount++
         $docsSize += $sizeMB
-        }
-        'jpg' | 'jpeg' | 'png' | 'gif' | 'mp4' | 'mov' | 'avi' | 'mp3' | 'wav' {
+    } elseif ($extension -in @('jpg','jpeg','png','gif','mp4','mov','avi','mp3','wav')) {
         Move-Item $file.FullName -Destination (Join-Path $mediaDir $filename)
         $mediaLog += " - $filename ($sizeMB MB) moved to Media"
         $mediaCount++
         $mediaSize += $sizeMB
-        }
-        Default {
-            Move-Item $file.FullName -Destination (Join-Path $otherDir $filename)
-            $otherLog += " - $filename ($sizeMB MB) moved to Other"
-            $otherCount++
-            $otherSize += $sizeMB
-        }
+    } else {
+        Move-Item $file.FullName -Destination (Join-Path $otherDir $filename)
+        $otherLog += " - $filename ($sizeMB MB) moved to Other"
+        $otherCount++
+        $otherSize += $sizeMB
     }
 
     Start-Sleep -Milliseconds 50
