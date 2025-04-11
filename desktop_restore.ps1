@@ -1,4 +1,5 @@
-# desktop_restore.ps1
+# desktop_restore.ps1 (GIF-Speed Version – No Delays)
+
 # Restores files from the 'Desktop Cleanup' structure back to the Desktop
 
 # Set paths
@@ -10,7 +11,6 @@ $otherDir = Join-Path $cleanupDir "Other"
 
 Write-Host ""
 Write-Host "==> Starting desktop restore..."
-Start-Sleep -Milliseconds 50
 
 # Safety check
 if (-not (Test-Path $cleanupDir)) {
@@ -45,7 +45,6 @@ function Restore-Files {
         Move-Item -Path $file.FullName -Destination (Join-Path $desktop $filename)
         Write-Host " - Restored $filename from $categoryName"
         $countVar.Value++
-        Start-Sleep -Milliseconds 50
     }
 }
 
