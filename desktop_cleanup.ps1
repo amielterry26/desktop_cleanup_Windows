@@ -1,5 +1,4 @@
-# desktop_cleanup.ps1
-# PowerShell version (fixed syntax)
+# desktop_cleanup.ps1 (GIF-Speed Version – No Delays)
 
 # Set paths
 $desktop = [Environment]::GetFolderPath("Desktop")
@@ -10,7 +9,6 @@ $otherDir = Join-Path $cleanupDir "Other"
 
 Write-Host ""
 Write-Host "==> Checking for Desktop Cleanup folder..."
-Start-Sleep -Milliseconds 50
 
 # Create directories if they don't exist
 if (-not (Test-Path $cleanupDir)) {
@@ -22,8 +20,6 @@ if (-not (Test-Path $cleanupDir)) {
     Write-Host "Desktop Cleanup folder already exists. Skipping creation."
 }
 
-Start-Sleep -Milliseconds 50
-
 # Initialize counters and logs
 $docsCount = 0; $mediaCount = 0; $otherCount = 0
 $docsSize = 0; $mediaSize = 0; $otherSize = 0
@@ -31,7 +27,6 @@ $docsLog = @(); $mediaLog = @(); $otherLog = @()
 
 Write-Host ""
 Write-Host "==> Scanning Desktop files and transferring..."
-Start-Sleep -Milliseconds 50
 
 # Loop through files on Desktop
 Get-ChildItem -Path $desktop -File | ForEach-Object {
@@ -62,8 +57,6 @@ Get-ChildItem -Path $desktop -File | ForEach-Object {
         $otherCount++
         $otherSize += $sizeMB
     }
-
-    Start-Sleep -Milliseconds 50
 }
 
 # Output logs
